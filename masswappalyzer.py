@@ -323,7 +323,7 @@ class MassWappalyzer(object):
             all_apps=set()
             for item in raw_results:
                 if isinstance(item, dict):
-                    for app in item['applications']:
+                    for app in item['technologies']:
                         all_apps.add(clean(app['name']))
             
             print("All applications seen: ")
