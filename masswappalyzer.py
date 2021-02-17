@@ -236,13 +236,13 @@ class WappalyzerWrapper(object):
                     # Works with python-Wappalyzer 0.2.3
                     result = dict()
                     result['urls'] = {host:{'status':'OK'}}
-                    result['applications'] = list()
+                    result['technologies'] = list()
 
                     for tech_name, infos in apps.items(): 
                         app_dict=dict()
                         app_dict['name']=tech_name
                         app_dict.update(infos)
-                        result['applications'].append(app_dict)
+                        result['technologies'].append(app_dict)
 
                 except Exception as e:
                     return RuntimeError(str(e))
@@ -319,14 +319,14 @@ class MassWappalyzer(object):
         finally:
 
             # Find the template Website keys and init a new class dynamically
-            # Keys: urls, applications meta
+            # Keys: urls, technologies meta
             all_apps=set()
             for item in raw_results:
                 if isinstance(item, dict):
                     for app in item['technologies']:
                         all_apps.add(clean(app['name']))
             
-            print("All applications seen: ")
+            print("All technologies seen: ")
             all_apps=sorted(all_apps)
             print(all_apps)
 
@@ -339,7 +339,7 @@ class MassWappalyzer(object):
                     website_dict['Urls']='\n'.join([ '{} ({})'.format(url, item['urls'][url]['status']) for url in item['urls'] ])
                     website_dict['Last_Url']= list(item['urls'].keys())[-1]
 
-                    for app in item['applications']:
+                    for app in item['technologies']:
                         # Litte dict comprehsion in order to correctly and dynamically display 
                         #   values of application structure in a human readable manner
                         website_dict.update(
